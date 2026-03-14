@@ -1,0 +1,9 @@
+# This file contains fish universal variable definitions.
+# VERSION: 3.0
+SETUVAR COLORTERM:\x1d
+SETUVAR --export EDITOR:vim
+SETUVAR --export VISUAL:edit
+SETUVAR __fish_initialized:4300
+SETUVAR _fisher_jorgebucaran_2F_nvm_2E_fish_files:/home/taminomara/\x2econfig/fish/functions/_nvm_index_update\x2efish\x1e/home/taminomara/\x2econfig/fish/functions/_nvm_list\x2efish\x1e/home/taminomara/\x2econfig/fish/functions/_nvm_version_activate\x2efish\x1e/home/taminomara/\x2econfig/fish/functions/_nvm_version_deactivate\x2efish\x1e/home/taminomara/\x2econfig/fish/functions/nvm\x2efish\x1e/home/taminomara/\x2econfig/fish/conf\x2ed/nvm\x2efish\x1e/home/taminomara/\x2econfig/fish/completions/nvm\x2efish
+SETUVAR _fisher_plugins:taminomara/tmtm\x1ejorgebucaran/nvm\x2efish
+SETUVAR _fisher_taminomara_2F_tmtm_files:/home/taminomara/\x2econfig/fish/functions/auto_activate_venv\x2efish\x1e/home/taminomara/\x2econfig/fish/functions/fish_git_prompt\x2efish\x1e/home/taminomara/\x2econfig/fish/functions/fish_prompt\x2efish\x1e/home/taminomara/\x2econfig/fish/functions/fish_right_prompt\x2efish\x1e/home/taminomara/\x2econfig/fish/functions/fish_venv_prompt\x2efish\x1e/home/taminomara/\x2econfig/fish/conf\x2ed/auto_activate_venv\x2efish\x1e/home/taminomara/\x2econfig/fish/conf\x2ed/git\x2efish\x1e/home/taminomara/\x2econfig/fish/conf\x2ed/pyenv\x2efish\x1e/home/taminomara/\x2econfig/fish/conf\x2ed/theme\x2efish\x1e/home/taminomara/\x2econfig/fish/completions/python\x2efish

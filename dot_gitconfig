@@ -1,0 +1,58 @@
+[core]
+	excludesfile = /home/taminomara/.gitignore
+	autocrlf = input
+[user]
+	name = Tamika Nomara
+	email = taminomara@gmail.com
+	signingkey = 6C0B823983A25DC7794AEFFAD6363A787077DE82
+[commit]
+	gpgsign = true
+[alias]
+	graph = gr
+	gr = log --graph --format=format:'%C(blue)%h%C(reset) %C(green)(%ar)%C(reset) %C(bold white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
+	st = status
+	co = checkout
+	ci = commit
+	cim = commit -m
+	cia = commit --amend --no-edit
+	br = branch
+	sw = switch
+	aa = add -A
+	p = push
+	pf = push --force-with-lease
+	spp = stash pop
+	sp = stash push
+	pp = sp
+	ppp = spp
+[push]
+	autoSetupRemote = true
+[pull]
+	ff = only
+[init]
+	defaultBranch = main
+[diff]
+	algorithm = histogram
+	indentHeuristic = true
+	renames = copies
+	colorMoved = plain
+	mnemonicPrefix = true
+[rebase]
+	autosquash = true
+	autoStash = true
+[fetch]
+	all = true
+	prune = true
+	pruneTags = false
+[rerere]
+	enabled = true
+	autoUpdate = true
+
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+[mergetool]
+	prompt = false
+[blame]
+	ignoreRevsFile = 
+[includeIf "gitdir:~/cloudlinux/"]
+    path = ~/cloudlinux/.gitconfig
