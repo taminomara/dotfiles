@@ -3,6 +3,7 @@ set -e
 cd $(git rev-parse --show-toplevel)
 
 hash="$(git log -n1 --format='format:%H')"
+branch="$(git branch --show-current)"
 
 if bash ~/.gitcommands/wip.bash; then
     has_wip_commit=1
@@ -21,8 +22,11 @@ if git switch "$@"; then
     bash ~/.gitcommands/unwip.bash
 else
     switch_exit_code="$?"
+    if [[ -n "$branch" ]]; then
+        git checkout -q "$branch"
+    fi
     if [[ "$has_wip_commit" -eq 1 ]]; then
-        bash ~/.gitcommands/unwip.bash > /dev/null || :
+        bash ~/.gitcommands/unwip.bash > /dev/null && echo "Unshelved repository state due to error" || :
     fi
     exit "$switch_exit_code"
 fi
