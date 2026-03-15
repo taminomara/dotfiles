@@ -1,23 +1,26 @@
 set -e
 
-IFS=$'\n'
-hash=''
-n='0'
-for i in $(git log --format='format:%s%x07%H' HEAD); do
-    msg=$(printf '%s' "$i" | cut -f 1 -d $'\7' | tr '[:upper:]' '[:lower:]')
-    if [[ "$msg" == 'wip' ]]; then
-        hash=$(printf '%s' "$i" | cut -f 2 -d $'\7')
-        (( n += 1 )) || :
-    else
-        break
-    fi
-done
+cd $(git rev-parse --show-toplevel)
 
-if [[ -n "$hash" ]]; then
-    s=$((( n != 1 )) && echo -n 's' || :)
-    echo "Resetting $n WIP commit$s"
-    git reset --soft "$hash~1"
+if [[ "$(git log -n1 --format=format:'%s')" == "WIP -- UNSTAGED" ]]; then
+    git reset -q "HEAD~1"
+    had_unstaged_files=1
 else
-    echo "Noting to unwip"
-    exit 1
+    had_unstaged_files=0
+fi
+
+if [[ "$(git log -n1 --format=format:'%s')" == "WIP -- STAGED" ]]; then
+    git reset -q --soft "HEAD~1"
+    had_staged_files=1
+else
+    had_staged_files=0
+fi
+
+if [[ "$had_staged_files" -eq 1 ]] || [[ "$had_unstaged_files" -eq 1 ]]; then
+    echo "Unshelved repository state"
+    echo
+    git status
+else
+    echo "Tree is clean, nothing to unshelve"
+    exit 5
 fi
