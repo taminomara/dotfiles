@@ -1,0 +1,24 @@
+font-family = "Cascadia Mono"
+font-size = 15
+theme = Catppuccin Macchiato
+shell-integration = fish
+selection-clear-on-copy = true
+mouse-hide-while-typing = true
+mouse-shift-capture = true
+# copy-on-select = false
+bell-features = border
+faint-opacity = 0.3
+
+keybind = performable:ctrl+c=copy_to_clipboard
+keybind = performable:ctrl+v=paste_from_clipboard
+keybind = ctrl+shift+k=clear_screen
+keybind = ctrl+a=select_all
+keybind = ctrl+==unbind
+keybind = ctrl+-=unbind
+keybind = shift+home=unbind
+keybind = shift+end=unbind
+keybind = shift+page_up=unbind
+keybind = shift+page_down=unbind
+keybind = shift+ctrl+left=unbind
+keybind = shift+ctrl+right=unbind
+keybind = ctrl+home=scroll_to_top
