@@ -4,7 +4,7 @@
 [user]
 	name = Tamika Nomara
 	email = taminomara@gmail.com
-	signingkey = 6C0B823983A25DC7794AEFFAD6363A787077DE82
+	signingkey = CC37CA45A110C66D7EF6CD8B9B186505F6CFE03C
 [commit]
 	gpgsign = true
 [alias]
@@ -20,10 +20,11 @@
 	aa = add -A
 	p = push
 	pf = push --force-with-lease
-	spp = stash pop
 	sp = stash push
-	pp = sp
-	ppp = spp
+	spp = stash pop
+	wip = !bash ~/.gitcommands/wip.bash
+	unwip = !bash ~/.gitcommands/unwip.bash
+	sww = !bash ~/.gitcommands/sww.bash
 [push]
 	autoSetupRemote = true
 [pull]
@@ -54,5 +55,5 @@
 	prompt = false
 [blame]
 	ignoreRevsFile = 
-[includeIf "gitdir:~/cloudlinux/"]
-    path = ~/cloudlinux/.gitconfig
+[includeIf "gitdir:~/p/cloudlinux/"]
+    path = ~/p/cloudlinux/.gitconfig
