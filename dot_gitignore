@@ -36,3 +36,18 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# AI local settings
+.claude/settings.local.json
+.claude/worktrees
+.claude/scheduled_tasks.lock
+.claude-profile
+
+# CloudLinux onboarding additions
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+
+**/.claude/settings.local.json

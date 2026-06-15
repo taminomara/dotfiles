@@ -1,5 +1,5 @@
 [core]
-	excludesfile = /home/taminomara/.gitignore
+	excludesfile = ~/.gitignore
 	autocrlf = input
 [user]
 	name = Tamika Nomara
@@ -29,6 +29,7 @@
 	autoSetupRemote = true
 [pull]
 	ff = only
+	rebase = true
 [init]
 	defaultBranch = main
 [diff]
@@ -54,6 +55,6 @@
 [mergetool]
 	prompt = false
 [blame]
-	ignoreRevsFile = 
+	ignoreRevsFile =
 [includeIf "gitdir:~/p/cloudlinux/"]
     path = ~/p/cloudlinux/.gitconfig
