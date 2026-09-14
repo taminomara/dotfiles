@@ -4,9 +4,6 @@
 [user]
 	name = Tamika Nomara
 	email = taminomara@gmail.com
-	signingkey = CC37CA45A110C66D7EF6CD8B9B186505F6CFE03C
-[commit]
-	gpgsign = true
 [alias]
 	graph = gr
 	gr = log --graph --format=format:'%C(blue)%h%C(reset) %C(green)(%ar)%C(reset) %C(bold white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
@@ -22,9 +19,29 @@
 	pf = push --force-with-lease
 	sp = stash push
 	spp = stash pop
-	wip = !bash ~/.gitcommands/wip.bash
-	unwip = !bash ~/.gitcommands/unwip.bash
-	sww = !bash ~/.gitcommands/sww.bash
+	l = gr HEAD origin/HEAD
+	wip = stash push -u
+    unwip = "!f() { \
+            h=$(git rev-parse HEAD) || return 1; \
+            s=$(git stash list --format='%gd %P' | awk -v h=$h '$2 == h { print $1; exit }'); \
+            if [ -z \"$s\" ]; then echo \"unwip: nothing stashed at this commit ($h)\" >&2; return 2; fi; \
+            echo \"unwip: popping $s\"; \
+            git stash pop \"$s\"; \
+    }; f"
+    swap = "!f() { \
+            before=$(git rev-parse -q --verify refs/stash); \
+            git wip || return 1; \
+            after=$(git rev-parse -q --verify refs/stash); \
+            if git switch \"$@\"; then \
+                    git unwip; rc=$?; \
+                    if [ $rc -eq 2 ]; then return 0; fi; \
+                    return $rc; \
+            else \
+                    rc=$?; \
+                    if [ \"$before\" != \"$after\" ]; then echo 'swap: switch failed, restoring stash' >&2; git stash pop; fi; \
+                    return $rc; \
+            fi; \
+    }; f"
 [push]
 	autoSetupRemote = true
 [pull]
@@ -56,5 +73,3 @@
 	prompt = false
 [blame]
 	ignoreRevsFile =
-[includeIf "gitdir:~/p/cloudlinux/"]
-    path = ~/p/cloudlinux/.gitconfig
