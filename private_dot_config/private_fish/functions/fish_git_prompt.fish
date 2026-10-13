@@ -1,13 +1,13 @@
 function fish_git_prompt
     # Reset cached prompt if repo state changed.
-    if set -q _cached_fish_git_prompt_root && test ! -e "$_cached_fish_git_prompt_root" -o "$(date -r $_cached_fish_git_prompt_root '+%s')" -gt "$_cached_fish_git_prompt_time"
+    if set -q _cached_fish_git_prompt_root && test ! -e "$_cached_fish_git_prompt_root" -o "$(date -r $_cached_fish_git_prompt_root '+%s%N')" -gt "$_cached_fish_git_prompt_time"
         _reset_cached_fish_git_prompt
     end
 
     # Generate and cache prompt.
     if not set -q _cached_fish_git_prompt
         set -g _cached_fish_git_prompt "$(_gen_fish_git_prompt)"
-        set -g _cached_fish_git_prompt_time "$(date '+%s')"
+        set -g _cached_fish_git_prompt_time "$(date '+%s%N')"
     end
 
     # Echo cached prompt.

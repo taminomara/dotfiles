@@ -1,7 +1,7 @@
 if command -sq git
     function git
         switch $argv[1]
-            case status st graph log diff help
+            case status st graph gr log diff help
                 command git $argv
             case '*'
                 command git $argv

@@ -2,11 +2,11 @@
 set -l normal normal
 set -l bleak '#666666'
 # set -l primary blue
-# set -l secondary '#8F87F7'
+# set -l secondary brblue
 # set -l primary_accent yellow
 # set -l secondary_accent red
 set -l primary green
-set -l secondary '#77A227'
+set -l secondary brgreen
 set -l primary_accent magenta
 set -l secondary_accent red
 
@@ -31,6 +31,7 @@ set -g fish_color_host                                  $primary_accent
 set -g fish_color_host_remote                           $primary_accent
 set -g fish_color_err_code                              $secondary_accent
 set -g fish_color_venv                                  $primary
+set -g fish_color_nono                                  yellow
 set -g fish_color_git_branch                            $primary_accent --bold
 set -g fish_color_git_action                            $secondary_accent
 set -g fish_color_git_detached                          $primary

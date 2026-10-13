@@ -27,6 +27,10 @@ function fish_prompt
 
     echo -n "$color_normal"
 
+    if set -q NONO_CAP_FILE
+        echo -n "$(set_color normal)$(set_color $fish_color_nono)(nono) $color_normal"
+    end
+
     if test $show_user -ne 0
         echo -n "$color_user$USER$color_normal"
     end
