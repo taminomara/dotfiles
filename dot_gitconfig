@@ -1,79 +1,79 @@
 [core]
-	excludesfile = ~/.gitignore
-	autocrlf = input
+    excludesfile = ~/.gitignore
+    autocrlf = input
 [user]
-	name = Tamika Nomara
-	email = taminomara@gmail.com
+    name = Tamika Nomara
+    email = taminomara@gmail.com
 [commit]
-	gpgsign = false
+    gpgsign = false
 [tag]
-	gpgsign = false
+    gpgsign = false
 [alias]
-	graph = gr
-	gr = log --graph --format=format:'%C(blue)%h%C(reset) %C(green)(%ar)%C(reset) %C(bold white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
-	st = status
-	co = checkout
-	ci = commit
-	cim = commit -m
-	cia = commit --amend --no-edit
-	br = branch
-	sw = switch
-	aa = add -A
-	p = push
-	pf = push --force-with-lease
-	sp = stash push
-	spp = stash pop
-	l = gr HEAD origin/HEAD
-	wip = stash push -u
+    graph = gr
+    gr = log --graph --format=format:'%C(blue)%h%C(reset) %C(green)(%ar)%C(reset) %C(bold white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
+    st = status
+    co = checkout
+    ci = commit
+    cim = commit -m
+    cia = commit --amend --no-edit
+    br = branch
+    sw = switch
+    aa = add -A
+    p = push
+    pf = push --force-with-lease
+    sp = stash push
+    spp = stash pop
+    l = gr HEAD origin/HEAD
+    wip = stash push -u
     unwip = "!f() { \
-            h=$(git rev-parse HEAD) || return 1; \
-            s=$(git stash list --format='%gd %P' | awk -v h=$h '$2 == h { print $1; exit }'); \
-            if [ -z \"$s\" ]; then echo \"unwip: nothing stashed at this commit ($h)\" >&2; return 2; fi; \
-            echo \"unwip: popping $s\"; \
-            git stash pop \"$s\"; \
+        h=$(git rev-parse HEAD) || return 1; \
+        s=$(git stash list --format='%gd %P' | awk -v h=$h '$2 == h { print $1; exit }'); \
+        if [ -z \"$s\" ]; then echo \"unwip: nothing stashed at this commit ($h)\" >&2; return 2; fi; \
+        echo \"unwip: popping $s\"; \
+        git stash pop \"$s\"; \
     }; f"
     swap = "!f() { \
-            before=$(git rev-parse -q --verify refs/stash); \
-            git wip || return 1; \
-            after=$(git rev-parse -q --verify refs/stash); \
-            if git switch \"$@\"; then \
-                    git unwip; rc=$?; \
-                    if [ $rc -eq 2 ]; then return 0; fi; \
-                    return $rc; \
-            else \
-                    rc=$?; \
-                    if [ \"$before\" != \"$after\" ]; then echo 'swap: switch failed, restoring stash' >&2; git stash pop; fi; \
-                    return $rc; \
-            fi; \
+        before=$(git rev-parse -q --verify refs/stash); \
+        git wip || return 1; \
+        after=$(git rev-parse -q --verify refs/stash); \
+        if git switch \"$@\"; then \
+            git unwip; rc=$?; \
+            if [ $rc -eq 2 ]; then return 0; fi; \
+            return $rc; \
+        else \
+            rc=$?; \
+            if [ \"$before\" != \"$after\" ]; then echo 'swap: switch failed, restoring stash' >&2; git stash pop; fi; \
+            return $rc; \
+        fi; \
     }; f"
 [push]
-	autoSetupRemote = true
+    autoSetupRemote = true
 [pull]
-	ff = only
-	rebase = true
+    ff = only
+    rebase = true
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [diff]
-	algorithm = histogram
-	indentHeuristic = true
-	renames = copies
-	colorMoved = plain
-	mnemonicPrefix = true
+    algorithm = histogram
+    indentHeuristic = true
+    renames = copies
+    colorMoved = plain
+    mnemonicPrefix = true
 [rebase]
-	autosquash = true
-	autoStash = true
+    autosquash = true
+    autoStash = true
 [fetch]
-	all = true
-	prune = true
-	pruneTags = false
+    all = true
+    prune = true
+    pruneTags = false
 [rerere]
-	enabled = true
-	autoUpdate = true
+    enabled = true
+    autoUpdate = true
 
 [merge]
-	tool = vimdiff
-	conflictstyle = diff3
+    tool = vimdiff
+    conflictstyle = diff3
 [mergetool]
-	prompt = false
+    prompt = false
 [blame]
-	ignoreRevsFile =
+    ignoreRevsFile =
