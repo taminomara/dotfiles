@@ -1,0 +1,94 @@
+onboarding = false
+
+[ui.toast]
+delivery = "off"
+
+[ui.sound]
+enabled = false
+
+[ui]
+copy_on_select = false
+prompt_new_tab_name = false
+tab_bar_right = [
+  { type = "zoom" },
+]
+tab_bar_right_separator = " · "
+
+[ui.sidebar.agents]
+rows = [
+  ["state_icon", "machine", "workspace"],
+  ["tab"],
+]
+
+[keys]
+prefix = "ctrl+shift+s"
+copy_mode = "ctrl+shift+x"
+clear_pane = "ctrl+shift+k"
+remote_image_paste = "ctrl+shift+v"
+new_tab = "ctrl+shift+t"
+close_tab = "ctrl+shift+w"
+next_tab = "ctrl+tab"
+previous_tab = "ctrl+shift+tab"
+move_tab_next = "ctrl+shift+period"
+move_tab_previous = "ctrl+shift+comma"
+switch_tab = "alt+1..9"
+rename_tab = "ctrl+shift+r"
+split_vertical = "ctrl+shift+o"
+split_horizontal = "ctrl+shift+alt+o"
+swap_pane_left = "ctrl+shift+alt+left"
+swap_pane_right = "ctrl+shift+alt+right"
+swap_pane_up = "ctrl+shift+alt+up"
+swap_pane_down = "ctrl+shift+alt+down"
+zoom = "ctrl+shift+z"
+goto = "ctrl+shift+e"
+new_workspace = "ctrl+shift+n"
+open_notification_target = "prefix+a"
+focus_pane_left = ""
+focus_pane_down = ""
+focus_pane_up = ""
+focus_pane_right = ""
+workspace_picker = ""
+rename_workspace = ""
+close_workspace = ""
+new_worktree = ""
+rename_pane = ""
+close_pane = ""
+resize_mode = ""
+cycle_pane_next = ""
+cycle_pane_previous = ""
+
+[[keys.command]]
+key = "ctrl+alt+left"
+type = "shell"
+command = '"$HOME/.local/bin/herdr-nav" left'
+description = "focus left pane or previous tab"
+
+[[keys.command]]
+key = "ctrl+alt+right"
+type = "shell"
+command = '"$HOME/.local/bin/herdr-nav" right'
+description = "focus right pane or next tab"
+
+[[keys.command]]
+key = "ctrl+alt+up"
+type = "shell"
+command = '"$HOME/.local/bin/herdr-nav" up'
+description = "focus pane above or previous workspace"
+
+[[keys.command]]
+key = "ctrl+alt+down"
+type = "shell"
+command = '"$HOME/.local/bin/herdr-nav" down'
+description = "focus pane below or next workspace"
+
+[[keys.command]]
+key = "ctrl+shift+f"
+type = "popup"
+command = '"$HERDR_BIN_PATH" pane read "$HERDR_ACTIVE_PANE_ID" --source recent-unwrapped --ansi --lines 1000000 | less -R --incsearch +G'
+description = "search scrollback"
+width = "100%"
+height = "100%"
+
+[theme]
+name = "rose-pine"
+auto_switch = false

@@ -1,0 +1,34 @@
+#!/bin/sh
+# herdr-nav left|right|up|down
+# Focus the neighboring pane; at a left or right edge, go to the adjacent tab in the
+# same workspace, and at a top or bottom edge, go to the adjacent workspace. Stops at
+# the first and last tab or workspace.
+set -eu
+dir=$1
+h=${HERDR_BIN_PATH:-herdr}
+pane=$HERDR_ACTIVE_PANE_ID
+
+edge=$("$h" pane edges --pane "$pane" | jq -r --arg d "$dir" '.result.edges[$d]')
+if [ "$edge" != true ]; then
+    exec "$h" pane focus --pane "$pane" --direction "$dir"
+fi
+
+case $dir in
+    left | up) step=-1 ;;
+    *) step=1 ;;
+esac
+adjacent='(map(.focused) | index(true) + $s) as $i
+    | if $i < 0 then empty else .[$i] // empty end'
+
+case $dir in
+    left | right)
+        tab=$("$h" tab list --workspace "$HERDR_ACTIVE_WORKSPACE_ID" |
+            jq -r --argjson s "$step" ".result.tabs | $adjacent | .tab_id")
+        [ -z "$tab" ] || exec "$h" tab focus "$tab"
+        ;;
+    *)
+        ws=$("$h" workspace list |
+            jq -r --argjson s "$step" ".result.workspaces | $adjacent | .workspace_id")
+        [ -z "$ws" ] || exec "$h" workspace focus "$ws"
+        ;;
+esac
