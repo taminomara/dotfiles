@@ -10,7 +10,7 @@
     gpgsign = false
 [alias]
     graph = gr
-    gr = log --graph --format=format:'%C(blue)%h%C(reset) %C(green)(%ar)%C(reset) %C(bold white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
+    gr = "!cd -- \"${GIT_PREFIX:-.}\" && git -c pager.log=\"sed -E 's/\\x1b\\[33m(G)\\x1b\\[m/\\x1b[7;32m\\1\\x1b[m/; s/\\x1b\\[33m(N)\\x1b\\[m/\\x1b[2;37m\\1\\x1b[m/; s/\\x1b\\[33m([BRXY])\\x1b\\[m/\\x1b[7;31m\\1\\x1b[m/; s/\\x1b\\[33m([EU])\\x1b\\[m/\\x1b[7;33m\\1\\x1b[m/' | less\" log --graph --format=format:'%C(blue)%h%C(reset) %C(yellow)%G?%C(reset) %C(green)(%ar)%C(reset) %C(bold white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' \"$@\""
     st = status
     co = checkout
     ci = commit
@@ -38,13 +38,37 @@
         after=$(git rev-parse -q --verify refs/stash); \
         if git switch \"$@\"; then \
             git unwip; rc=$?; \
-            if [ $rc -eq 2 ]; then return 0; fi; \
-            return $rc; \
+                if [ $rc -eq 2 ]; then return 0; fi; \
+                return $rc; \
         else \
             rc=$?; \
             if [ \"$before\" != \"$after\" ]; then echo 'swap: switch failed, restoring stash' >&2; git stash pop; fi; \
-            return $rc; \
+                return $rc; \
         fi; \
+    }; f"
+    sync-fork = "!f() { \
+        up=$(git config syncfork.upstream || echo upstream); \
+        fork=$(git config syncfork.fork || echo origin); \
+        git fetch \"$up\" || return 1; \
+        br=$1; \
+        if [ -z \"$br\" ]; then \
+            git symbolic-ref -q \"refs/remotes/$up/HEAD\" >/dev/null || git remote set-head \"$up\" --auto >/dev/null || return 1; \
+            br=$(git symbolic-ref --short \"refs/remotes/$up/HEAD\") || return 1; \
+            br=${br#*/}; \
+        fi; \
+        target=\"refs/remotes/$up/$br\"; \
+        git rev-parse -q --verify \"$target\" >/dev/null || { echo \"sync-fork: no such ref $up/$br\" >&2; return 1; }; \
+        wt=$(git worktree list --porcelain | awk -v b=\"branch refs/heads/$br\" '/^worktree /{w=substr($0,10)} $0==b{print w; exit}'); \
+        if [ -n \"$wt\" ]; then \
+            if [ -n \"$(git -C \"$wt\" status --porcelain --untracked-files=no)\" ]; then \
+                echo \"sync-fork: $br is checked out at $wt with uncommitted changes\" >&2; return 1; \
+            fi; \
+            git -C \"$wt\" reset --hard \"$target\" || return 1; \
+        else \
+            git update-ref -m \"sync-fork: reset to $up/$br\" \"refs/heads/$br\" \"$target\" || return 1; \
+        fi; \
+        echo \"sync-fork: $br is now at $(git rev-parse --short \"$br\") ($up/$br)\"; \
+        git push --force-with-lease \"$fork\" \"$up:$br\"; \
     }; f"
 [push]
     autoSetupRemote = true
